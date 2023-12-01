@@ -82,7 +82,7 @@ function getParameterByName(name) {
 function fetchUser() {
   $.ajax({
     type: "GET",
-    url: "/user/me?userId=" + getParameterByName("userId"),
+    url: "/user/me",
     success: function (response) {
       user = response;
       listen_websocket();

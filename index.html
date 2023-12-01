@@ -4,28 +4,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>카카오톡 채팅방 예시</title>
-    <link rel="stylesheet" href="./style.css" />
-    <script src="./function.js"></script>
+    <title>채팅방 목록</title>
+    <link rel="stylesheet" href="resources/style.css" />
+    <script src="resources/friends.js"></script>
   </head>
   <body>
     <div class="chat-room">
       <div class="chat-window">
-        <div class="chat-content" id="chat-left"></div>
-        <div class="chat-input">
-          <textarea
-            type="text"
-            id="input-left"
-            placeholder="메시지를 입력하세요."
-          ></textarea>
-          <div class="btn-send" id="send-left" onclick="sendMsg(0);">
-            <img
-              src="https://cdn.icon-icons.com/icons2/2783/PNG/512/send_message_chat_icon_177294.png"
-              alt=""
-              width="24px"
-              height="24px"
-            />
+        <div class="home-content">
+          <div class="appbar-friend">
+            <p>친구</p>
+            <img src="resources/icon_search.png" class="p8 image-button" />
+            <img src="resources/icon_add_user.png" class="image-button" />
           </div>
+          <div id="user-holder"></div>
+          <div class="content-friends" id="friends-holder"></div>
         </div>
       </div>
     </div>

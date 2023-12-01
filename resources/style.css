@@ -30,6 +30,15 @@ body {
   overflow-y: scroll;
   flex: 1;
 }
+
+.home-content {
+  background-color: #ffffff;
+  padding: 5px;
+
+  overflow-y: scroll;
+  flex: 1;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
   background-color: transparent;
@@ -204,6 +213,7 @@ body {
 .login-button,
 .qr-login {
   width: 90%;
+  height: 42px;
   padding: 10px;
   border: none;
   border-radius: 4px;
@@ -212,6 +222,26 @@ body {
   cursor: pointer;
 }
 
+.register-button {
+  width: 90%;
+  height: 42px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  margin-top: 16px;
+  color: #ffffff;
+  background-color: #000000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-input > #user-password-check {
+  margin-top: -12px;
+}
+
+.register-button:hover {
+  background-color: #333333;
+}
 .login-button:hover,
 .qr-login:hover {
   background-color: #ecd100;
@@ -224,4 +254,101 @@ body {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid #c0c0c0; /* Change #000 to the color you want for the underline */
+}
+
+/**
+친구 목록 화면
+*/
+
+.appbar-friend {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.appbar-friend > p {
+  flex: 1;
+  margin-left: 8px;
+  font-size: large;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.image-button {
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+.image-button:hover {
+  background-color: #e0e0e0;
+  border-radius: 50%;
+}
+
+.p8 {
+  padding: 8px;
+}
+
+.user-profile-item {
+  display: flex;
+  flex-direction: row;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  align-items: center;
+}
+
+.user-profile-item:hover {
+  background-color: #e0e0e0;
+}
+
+.user-profile-item > img {
+  width: 64px;
+  height: 64px;
+  border-radius: 40%;
+}
+
+.user-profile-item > p {
+  margin-left: 24px;
+  flex: 1;
+  margin-right: 8px;
+}
+
+.user-profile-item > h5 {
+  border-radius: 20px;
+  padding: 4px 8px;
+  margin-right: 8px;
+  background-color: #ffffff;
+  border: 1px solid #eeeeee;
+}
+
+.user-profile-item > h5:hover {
+  background-color: #eeeeee;
+}
+
+.friend-item {
+  display: flex;
+  flex-direction: row;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 12px;
+  align-items: center;
+}
+
+.friend-item:hover {
+  background-color: #e0e0e0;
+}
+
+.friend-item > img {
+  width: 48px;
+  height: 48px;
+  border-radius: 40%;
+}
+
+.friend-item > p {
+  margin-left: 24px;
+  flex: 1;
+  margin-right: 8px;
 }

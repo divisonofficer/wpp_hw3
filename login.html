@@ -2,16 +2,20 @@
 <html>
 <head>
     <title>Log In</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="resources/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="login.js"></script>
+    <script src="resources/login.js"></script>
 </head>
 <body>
     <div class="login-container">
         <div class="login-form">
             <h1>Kakao</h1>
             <input type="text" placeholder="유저명" id="user-name" class="login-input">
-            <button type="submit" class="login-button">로그인</button>
+            <input type="password" placeholder="비밀번호" id="user-password" class="login-input">
+        
+            <button type="submit" class="login-button" id="login-button">로그인</button>
+            <button type="submit" class="register-button" id="register-button">회원가입</button>
+            
         </div>
     </div>
 </html>
