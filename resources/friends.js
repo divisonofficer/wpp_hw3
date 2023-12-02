@@ -1,8 +1,10 @@
 function append_friends(friend) {
+  const profileImg =
+    friend.user_info.profile_img || "resources/icon_profile_basic.jpeg";
   const friend_view = `
     <div class="friend-item">
-              <img src="${friend.profile_img}" />
-              <p>${friend.username}</p>
+              <img src="${profileImg}" />
+              <p>${friend.name}</p>
              
             </div>
     `;
@@ -11,10 +13,13 @@ function append_friends(friend) {
 }
 
 function append_user(user) {
+  $("#user-holder").empty();
+  const profileImg =
+    user.user_info.profile_img || "resources/icon_profile_basic.jpeg";
   const user_view = `
     <div class="user-profile-item">
-              <img src="${user.profile_img}" />
-              <p>${user.username}</p>
+              <img src="${profileImg}" />
+              <p>${user.name}</p>
               <h5>상태메세지+</h5>
             </div>
     `;
@@ -22,18 +27,34 @@ function append_user(user) {
   $("#user-holder").append(user_view);
 }
 
-$(document).ready(() => {
-  append_user({
-    profile_img: "/resources/profile_1.png",
-    username: "김철수",
+function fetchFriends() {
+  $.ajax({
+    type: "GET",
+    url: "/friend",
+    success: function (response) {
+      addFriends(response);
+    },
   });
+}
 
-  append_friends({
-    profile_img: "/resources/profile_1.png",
-    username: "김철수",
+function fetchUser() {
+  $.ajax({
+    type: "GET",
+    url: "/user/me",
+    success: function (response) {
+      append_user(response);
+    },
   });
-  append_friends({
-    profile_img: "/resources/profile_1.png",
-    username: "김철수",
+}
+
+function addFriends(friends) {
+  $("#friends-holder").empty();
+  friends.forEach((friend) => {
+    append_friends(friend);
   });
+}
+
+$(document).ready(() => {
+  fetchUser();
+  fetchFriends();
 });

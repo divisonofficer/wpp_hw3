@@ -3,8 +3,27 @@ from typing import Optional
 from datetime import datetime
 
 
+class MakeFriendRequest(BaseModel):
+    friend_id: int
+
+    class Config:
+        orm_mode = True
+
+
+class UserInfoSchema(BaseModel):
+    id: int
+    user_id: int
+    friends: list
+
+    class Config:
+        orm_mode = True
+        from_attributes = True
+
+
 class UserSchemaView(BaseModel):
+    id: int
     name: str
+    user_info: UserInfoSchema
 
     class Config:
         orm_mode = True

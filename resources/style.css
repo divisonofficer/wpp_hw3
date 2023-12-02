@@ -33,8 +33,6 @@ body {
 
 .home-content {
   background-color: #ffffff;
-  padding: 5px;
-
   overflow-y: scroll;
   flex: 1;
 }
@@ -264,7 +262,8 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .appbar-friend > p {
@@ -351,4 +350,46 @@ body {
   margin-left: 24px;
   flex: 1;
   margin-right: 8px;
+}
+
+.friend-recommend-item {
+  display: flex;
+  flex-direction: row;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+  align-items: center;
+
+  > img {
+    width: 48px;
+    height: 48px;
+    border-radius: 40%;
+  }
+
+  > p {
+    margin-left: 12px;
+    flex: 1;
+    margin-right: 8px;
+  }
+
+  > button {
+    width: 48px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ddd;
+
+    > img {
+      width: 100%;
+      height: 100%;
+      padding: 4px;
+      box-sizing: border-box;
+      object-fit: contain;
+    }
+  }
+
+  > button:hover {
+    background-color: #ccc;
+  }
 }

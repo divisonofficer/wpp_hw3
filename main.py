@@ -74,6 +74,13 @@ def login(
     return {"access_token": access_token}
 
 
+"""
+
+Frontend Routing
+
+"""
+
+
 @app.get("/")
 def get_root(user=Depends(manager)):
     return FileResponse("index.html")
@@ -87,6 +94,16 @@ def get_login():
 @app.get("/register")
 def get_register_html():
     return FileResponse("register.html")
+
+
+@app.get("/recommendfriend")
+def get_recommendfriend_html():
+    return FileResponse("recommendfriend.html")
+
+
+"""
+Account API
+"""
 
 
 @app.post("/register")
@@ -114,6 +131,36 @@ def lotout(response: Response):
     return response
 
 
+"""
+Friend API
+
+"""
+
+
+@app.get("/friend")
+def get_friends(user=Depends(manager), db: Session = Depends(get_db)):
+    return read_friends(db, user.id)
+
+
+@app.get("/friend/recommend")
+def get_recommend_friend(user=Depends(manager), db: Session = Depends(get_db)):
+    return read_candidate_friends(db, user.id)
+
+
+@app.post("/friend/make")
+def post_make_friend(
+    request: MakeFriendRequest, user=Depends(manager), db: Session = Depends(get_db)
+):
+    return make_friend(db, user.id, request.friend_id)
+
+
+"""
+
+MESSAGE API
+
+"""
+
+
 @app.get("/message")
 def get_all_messages(db: Session = Depends(get_db)):
     return read_all_messages(db)
@@ -129,7 +176,7 @@ async def post_message(message: MessageSchemaBase, db: Session = Depends(get_db)
 
 @app.get("/user/me")
 def get_current_user(user=Depends(manager), db: Session = Depends(get_db)):
-    return user
+    return read_user_by_id(db, user.id)
 
 
 @manager.user_loader

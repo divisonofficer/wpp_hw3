@@ -16,7 +16,7 @@ chatroom_association = Table(
     "chatroom_association",
     Base.metadata,
     Column("chat_room_id", Integer, ForeignKey("chat_rooms.id")),
-    Column("user_id", Integer, ForeignKey("users.id")),
+    Column("user_id", Integer, ForeignKey("user_info.user_id")),
 )
 
 
@@ -39,8 +39,8 @@ class ChatRoom(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
     # Relationship for users
-    users = relationship(
-        "User", secondary=chatroom_association, back_populates="chatrooms"
+    user_infos = relationship(
+        "UserInfo", secondary=chatroom_association, back_populates="chatrooms"
     )
     # Relationship for messages
     messages = relationship("Message", back_populates="room")
@@ -55,6 +55,10 @@ class User(Base):
     # One-to-one relationship with UserInfo
     user_info = relationship("UserInfo", back_populates="user", uselist=False)
 
+    def hide_password(self):
+        self.password = None
+        return self
+
 
 class UserInfo(Base):
     __tablename__ = "user_info"
@@ -65,12 +69,12 @@ class UserInfo(Base):
     friends = relationship(
         "UserInfo",
         secondary=friends_association,
-        primaryjoin=id == friends_association.c.user_info_id,
+        primaryjoin=id == friends_association.c.user_id,
         secondaryjoin=id == friends_association.c.friend_id,
     )
     # Relationship for chatrooms
     chatrooms = relationship(
-        "ChatRoom", secondary=chatroom_association, back_populates="users_info"
+        "ChatRoom", secondary=chatroom_association, back_populates="user_infos"
     )
     # Relationship for ProfileImage
     profile_image = relationship(
