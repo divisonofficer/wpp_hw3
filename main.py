@@ -101,6 +101,11 @@ def get_recommendfriend_html():
     return FileResponse("recommendfriend.html")
 
 
+@app.get("/profile/{id}")
+def get_profile_html(id: int):
+    return FileResponse("profile.html")
+
+
 """
 Account API
 """
@@ -177,6 +182,11 @@ async def post_message(message: MessageSchemaBase, db: Session = Depends(get_db)
 @app.get("/user/me")
 def get_current_user(user=Depends(manager), db: Session = Depends(get_db)):
     return read_user_by_id(db, user.id)
+
+
+@app.get("/user/{user_id}")
+def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
+    return read_user_by_id(db, user_id)
 
 
 @manager.user_loader

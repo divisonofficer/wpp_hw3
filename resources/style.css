@@ -393,3 +393,63 @@ body {
     background-color: #ccc;
   }
 }
+
+.profile-content {
+  flex: 1;
+  background-color: #becdde;
+}
+
+.profile-content-shade {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  justify-content: flex-start;
+
+  > h1 {
+    color: #ffffff;
+    font-size: x-large;
+    font-weight: 400;
+  }
+
+  > p {
+    position: relative;
+    top: -8px;
+    color: #ffffff;
+    font-size: small;
+    padding-bottom: 24px;
+  }
+}
+
+.appbar-profile {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.profile-image-holder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+
+  > img {
+    width: 64px;
+    height: 64px;
+    border-radius: 40%;
+    object-fit: cover;
+  }
+}
+
+.image-white {
+  /**
+    image tint with white color
+  */
+  filter: brightness(0) invert(1);
+}

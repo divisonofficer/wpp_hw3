@@ -1,8 +1,12 @@
+function gotoProfile(userId) {
+  window.location.href = "/profile/" + userId;
+}
+
 function append_friends(friend) {
   const profileImg =
     friend.user_info.profile_img || "resources/icon_profile_basic.jpeg";
   const friend_view = `
-    <div class="friend-item">
+    <div class="friend-item" onclick="gotoProfile(${friend.id})">
               <img src="${profileImg}" />
               <p>${friend.name}</p>
              
