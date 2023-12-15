@@ -140,8 +140,11 @@ def insert_message(msg: MessageSchemaBase, room_id: int, db: Session):
         "id": db_item.id,
         "message_type": db_item.message_type,
         "message": db_item.message,
-        "sender": sender,
-        "created_at": db_item.created_at,
+        "sender": {
+            "id": sender.id,
+            "name": sender.name,
+        },
+        "created_at": db_item.created_at.strftime("%Y-%m-%d %H:%M:%S"),
         "sender_id": db_item.sender_id,
         "room_id": db_item.room_id,
     }

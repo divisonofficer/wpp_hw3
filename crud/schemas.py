@@ -3,6 +3,13 @@ from typing import Optional
 from datetime import datetime
 
 
+class GroupChatRequest(BaseModel):
+    friend_ids: list
+
+    class Config:
+        orm_mode = True
+
+
 class MakeFriendRequest(BaseModel):
     friend_id: int
 

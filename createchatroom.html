@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>채팅방 목록</title>
+    <link rel="stylesheet" href="resources/style.css" />
+    <script src="/resources/friendtemplate.js"></script>
+    <script src="/resources/createchatroom.js"></script>
+  </head>
+  <body>
+    <div class="chat-room">
+      <div class="chat-window">
+        <div class="home-content">
+          <div class="appbar-friend">
+            <img
+              src="/resources/icon-back-arrow.png"
+              class="p8 image-button"
+              onclick="location.href='/chatlobby'"
+            />
+            <p>그룹 채팅 초대하기</p>
+            <img
+              src="resources/icon_create_chatroom.png"
+              class="p8 image-button"
+              onclick="createChatroomWithFriends();"
+            />
+          </div>
+          <div id="friend-holder"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

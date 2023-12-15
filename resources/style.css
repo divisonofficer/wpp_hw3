@@ -28,6 +28,7 @@ body {
   height: 60px;
   display: flex;
   flex-direction: row;
+  background-color: #becdde;
 }
 
 .chat-content {
@@ -294,6 +295,10 @@ body {
 
 .p8 {
   padding: 8px;
+}
+
+.p12 {
+  padding: 12px;
 }
 
 .user-profile-item {

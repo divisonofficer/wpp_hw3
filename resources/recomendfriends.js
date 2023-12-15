@@ -37,6 +37,14 @@ function addRecommendFriends(users) {
 
 function recommendFriendItem(user) {
   const img = user.user_info.profile_img || "resources/icon_profile_basic.jpeg";
+  return friendTemplate(
+    user.id,
+    user.name,
+    img,
+    1,
+    undefined,
+    "postMakeFriend"
+  );
   return `
 
   <div class="friend-recommend-item">

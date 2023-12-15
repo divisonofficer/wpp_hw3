@@ -12,6 +12,7 @@ from crud.crud import *
 from pydantic import BaseModel
 from crud.schemas import *
 from websocket.socket_manager import ConnectionManager
+import json
 
 
 class NotAuthenticatedException(Exception):
@@ -115,6 +116,11 @@ def get_chatlobby_html(user=Depends(manager)):
     return FileResponse("chatlobby.html")
 
 
+@app.get("/createchatroom")
+def get_createchatroom_html(user=Depends(manager)):
+    return FileResponse("createchatroom.html")
+
+
 """
 Account API
 """
@@ -198,6 +204,14 @@ CHATROOM API
 """
 
 
+@app.post("/chatroom/group")
+def post_group_chatroom(
+    request: GroupChatRequest, db: Session = Depends(get_db), user=Depends(manager)
+):
+    ids = request.friend_ids + [user.id]
+    return createChatroom(db, ids)
+
+
 @app.get("/chatroom/p2p/{friend_id}")
 def get_p2p_chatroom(
     friend_id: str, db: Session = Depends(get_db), user=Depends(manager)
@@ -247,5 +261,6 @@ async def post_message(
     message: MessageSchemaBase, chatroom_id: int, db: Session = Depends(get_db)
 ):
     message_item = insert_message(message, chatroom_id, db)
-    await socket_manager.broadcast(message_item)
+    print(message_item)
+    await socket_manager.broadcast(json.dumps(message_item))
     return message_item
