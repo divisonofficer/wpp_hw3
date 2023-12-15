@@ -38,12 +38,24 @@ class ChatRoom(Base):
     __tablename__ = "chat_rooms"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
+    created_at = Column(DateTime)
+    user_count = Column(Integer)
     # Relationship for users
     user_infos = relationship(
         "UserInfo", secondary=chatroom_association, back_populates="chatrooms"
     )
+    user_chatroom_info = relationship("UserChatroomInfo", back_populates="chatroom")
     # Relationship for messages
     messages = relationship("Message", back_populates="room")
+
+
+class UserChatroomInfo(Base):
+    __tablename__ = "user_chatroom_info"
+    chatroom_id = Column(Integer, ForeignKey("chat_rooms.id"), primary_key=True)
+    user_id = Column(Integer, ForeignKey("user_info.user_id"), primary_key=True)
+    display_name = Column(String)
+    unread_message_count = Column(Integer)
+    chatroom = relationship("ChatRoom", back_populates="user_chatroom_info")
 
 
 class User(Base):
@@ -64,6 +76,7 @@ class UserInfo(Base):
     __tablename__ = "user_info"
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
+    user_name = Column(String)
     # Additional user information fields (if any)
     # Relationship for friends
     friends = relationship(

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="resources/style.css" />
+    <script src="resources/friends.js"></script>
+    <style>
+      .nav-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        height: 36px;
+        background-color: #f2f2f2;
+      }
+    </style>
+    <script>
+      function gotoFriends() {
+        window.location.href = "/";
+      }
+      function gotoChatLobby() {
+        window.location.href = "/chatlobby";
+      }
+      function logout() {
+        window.location.href = "/logout";
+        window.location.href = "/login";
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="nav-container">
+      <img
+        src="resources/icon_add_user.png"
+        class="p8 image-button"
+        onclick="gotoFriends()"
+      />
+      <img
+        src="resources/icon_chat.png"
+        onclick="gotoChatLobby()"
+        class="p8 image-button"
+      />
+      <img
+        src="resources/icon_logout.png"
+        class="p8 image-button"
+        onclick="logout()"
+      />
+    </div>
+  </body>
+</html>

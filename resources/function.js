@@ -64,6 +64,7 @@ function chatDateHead() {
 }
 
 let user = {};
+let chatroom_id = "";
 
 function getParameterByName(name) {
   let url = window.location.href;
@@ -99,7 +100,7 @@ function fetchChatList() {
   chat_list = [];
   $.ajax({
     type: "GET",
-    url: "/message",
+    url: `/chatroom/${chatroom_id}/message`,
     success: function (response) {
       chat_list = response;
       renderChat();
@@ -166,7 +167,7 @@ function sendMsg() {
 
   $.ajax({
     type: "POST",
-    url: "/message",
+    url: `/chatroom/${chatroom_id}/message`,
     contentType: "application/json",
     data: JSON.stringify({
       message_type: "text",
@@ -184,6 +185,7 @@ function sendMsg() {
 }
 
 $(document).ready(() => {
+  chatroom_id = window.location.href.split("/").pop();
   fetchUser();
 
   //if input is empty, make send button disabled with gray color

@@ -1,10 +1,13 @@
-function fetchProfile() {
+function getUrlUserId() {
   const urlsplit = window.location.href.split("/");
   const userid = urlsplit[urlsplit.length - 1];
+  return userid;
+}
 
+function fetchProfile() {
   $.ajax({
     type: "GET",
-    url: "/user/" + userid,
+    url: "/user/" + getUrlUserId(),
     success: function (response) {
       append_profile(response);
     },
@@ -22,3 +25,13 @@ function append_profile(profile) {
 $(document).ready(() => {
   fetchProfile();
 });
+
+function fetchP2PChatInfo() {
+  $.ajax({
+    type: "GET",
+    url: "/chatroom/p2p/" + getUrlUserId(),
+    success: function (response) {
+      window.location.href = "/chatroom/" + response.id;
+    },
+  });
+}

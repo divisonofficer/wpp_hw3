@@ -50,7 +50,7 @@ class MessageSchemaBase(BaseModel):
 
 class MessageSchema(MessageSchemaBase):
     id: Optional[int]
-    chatroom_id: int
+    room_id: int
     sender: UserSchemaView
     created_at: datetime
 

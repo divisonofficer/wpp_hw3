@@ -83,6 +83,10 @@ Frontend Routing
 
 @app.get("/")
 def get_root(user=Depends(manager)):
+    """if no user, throw NotAuthenticatedException"""
+    if user is None:
+        raise NotAuthenticatedException
+
     return FileResponse("index.html")
 
 
@@ -97,13 +101,18 @@ def get_register_html():
 
 
 @app.get("/recommendfriend")
-def get_recommendfriend_html():
+def get_recommendfriend_html(user=Depends(manager)):
     return FileResponse("recommendfriend.html")
 
 
 @app.get("/profile/{id}")
-def get_profile_html(id: int):
+def get_profile_html(id: int, user=Depends(manager)):
     return FileResponse("profile.html")
+
+
+@app.get("/chatlobby")
+def get_chatlobby_html(user=Depends(manager)):
+    return FileResponse("chatlobby.html")
 
 
 """
@@ -159,26 +168,6 @@ def post_make_friend(
     return make_friend(db, user.id, request.friend_id)
 
 
-"""
-
-MESSAGE API
-
-"""
-
-
-@app.get("/message")
-def get_all_messages(db: Session = Depends(get_db)):
-    return read_all_messages(db)
-
-
-@app.post("/message")
-async def post_message(message: MessageSchemaBase, db: Session = Depends(get_db)):
-    message_item = insert_message(message, db)
-    message_item_json = MessageSchema.from_orm(message_item).json()
-    await socket_manager.broadcast(message_item_json)
-    return message_item
-
-
 @app.get("/user/me")
 def get_current_user(user=Depends(manager), db: Session = Depends(get_db)):
     return read_user_by_id(db, user.id)
@@ -202,3 +191,61 @@ def get_user(username: str, db: Session = None):
 def get_resources(filename: str):
     filepath = "resources/" + filename
     return FileResponse(filepath)
+
+
+"""
+CHATROOM API
+"""
+
+
+@app.get("/chatroom/p2p/{friend_id}")
+def get_p2p_chatroom(
+    friend_id: str, db: Session = Depends(get_db), user=Depends(manager)
+):
+    return getP2PChatRoomInfo(db, user.id, friend_id)
+
+
+@app.delete("/chatroom/{chatroom_id}")
+def delete_chatroom(chatroom_id: int, db: Session = Depends(get_db)):
+    return removeChatroom(db, chatroom_id)
+
+
+@app.get("/chatroom/list")
+def get_user_chatroom_all(db: Session = Depends(get_db), user=Depends(manager)):
+    return read_user_chatroom_all(db, user.id)
+
+
+@app.delete("/chatroom/{chatroom_id}")
+def delete_chatroom(chatroom_id: int, db: Session = Depends(get_db)):
+    return removeChatroom(db, chatroom_id)
+
+
+"""
+
+MESSAGE API
+
+"""
+
+
+@app.get("/chatroom/{chatroom_id}")
+def get_chatroom(chatroom_id: int, db: Session = Depends(get_db)):
+    return FileResponse("chatroom.html")
+
+
+@app.get("/chatroom/{chatroom_id}/message")
+def get_chatroom_message(chatroom_id: int, db: Session = Depends(get_db)):
+    return read_chatroom_message(db, chatroom_id)
+
+
+@app.get("/message")
+def get_all_messages(db: Session = Depends(get_db)):
+    return read_all_messages(db)
+
+
+@app.post("/chatroom/{chatroom_id}/message")
+async def post_message(
+    message: MessageSchemaBase, chatroom_id: int, db: Session = Depends(get_db)
+):
+    message_item = insert_message(message, chatroom_id, db)
+    await socket_manager.broadcast(message_item)
+    return message_item

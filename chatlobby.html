@@ -4,9 +4,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>친구 목록</title>
+    <title>채팅방 목록</title>
     <link rel="stylesheet" href="resources/style.css" />
-    <script src="resources/friends.js"></script>
+    <script src="resources/chatlobby.js"></script>
     <script src="resources/navmenu.js"></script>
   </head>
   <body>
@@ -14,17 +14,22 @@
       <div class="chat-window">
         <div class="home-content">
           <div class="appbar-friend">
-            <p>친구</p>
+            <p>채팅</p>
             <img src="resources/icon_search.png" class="p8 image-button" />
-            <img
-              src="resources/icon_add_user.png"
-              class="image-button"
-              id="btn-friend-recommend"
-              onclick="location.href='/recommendfriend'"
-            />
           </div>
-          <div id="user-holder"></div>
-          <div class="content-friends" id="friends-holder"></div>
+          <div id="chatrooms-holder">
+            <div class="lobby-chatroom">
+              <img src="resources/icon_profile_basic.jpeg" />
+              <div class="lobby-chatroom-text">
+                <h1>채팅방 이름</h1>
+                <p>최신 메세지</p>
+              </div>
+              <div class="lobby-chatroom-notification">
+                <h5>오전 10:47</h5>
+                <p>2</p>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="menu-holder"></div>
       </div>

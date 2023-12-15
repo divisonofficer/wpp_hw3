@@ -5,12 +5,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>카카오톡 채팅방 예시</title>
-    <link rel="stylesheet" href="resources/style.css" />
-    <script src="resources/function.js"></script>
+    <link rel="stylesheet" href="/resources/style.css" />
+    <script src="/resources/function.js"></script>
   </head>
   <body>
     <div class="chat-room">
       <div class="chat-window">
+        <div class="chat-appbar">
+          <img
+            src="/resources/icon-back-arrow.png"
+            class="image-button p8"
+            id="btn-chat-back"
+            onclick="location.href='/chatlobby'"
+          />
+        </div>
         <div class="chat-content" id="chat-left"></div>
         <div class="chat-input">
           <textarea
