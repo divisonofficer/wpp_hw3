@@ -1,5 +1,5 @@
-# wpp_hw3
-웹프실 염익준 과제 3
+# Web Pogramming Practice Final Project
+웹프실 염익준교수님 파이널 프로젝트
 
 ![chat_예제](https://github.com/divisonofficer/wpp_hw3/assets/41609506/f7810d70-25c8-4251-8e6a-d5fbe601686a)
 
@@ -7,7 +7,13 @@
 
 # How to run?
 
-1. install library
+1. git clone
+
+```bash
+git clone https://github.com/divisonofficer/wpp_hw3.git
+```
+
+2. install library
 
 ```python
 pip install fastapi sqlalchemy fastapi_login uvicorn
