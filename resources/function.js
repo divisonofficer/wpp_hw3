@@ -42,7 +42,25 @@ function msg_view(owner, chat, profileVisible = false, timeVisible = true) {
             <div class="time">${
               timeVisible ? dateTimeFormat(chat.created_at) : ""
             }</div>
-            <div class="text">${chat.message.replaceAll("\n", "<br>")}</div>
+            ${
+              chat.message_type === "text"
+                ? `<div class="text">${chat.message.replaceAll(
+                    "\n",
+                    "<br>"
+                  )}</div>`
+                : ""
+            }
+            ${
+              chat.message_type === "image"
+                ? `<div class="chat-image"><img src="/${chat.message}" alt=""/></div>`
+                : ""
+            }
+            ${
+              chat.message_type === "video"
+                ? `<div class="chat-video"><video src="/${chat.message}" alt="" controls/></div>`
+                : ""
+            }
+            
         </div>
         </div>
         
@@ -184,6 +202,33 @@ function sendMsg() {
   $("#chat-left").scrollTop($("#chat-left")[0].scrollHeight);
 }
 
+function sendMediaInput(type) {
+  let file = $(`#input-${type}`)[0].files[0];
+  if (file == undefined) {
+    return;
+  }
+  sendMedia(file, type);
+}
+
+function sendMedia(file, type) {
+  let formData = new FormData();
+  formData.append("upload_file", file);
+  formData.append("sender_id", user.id);
+  formData.append("type", type);
+
+  $.ajax({
+    type: "POST",
+    url: `/chatroom/${chatroom_id}/message/file`,
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function (response) {
+      $("#chat-left").scrollTop($("#chat-left")[0].scrollHeight);
+      appendChatResponse(response, 0);
+    },
+  });
+}
+
 $(document).ready(() => {
   chatroom_id = window.location.href.split("/").pop();
   fetchUser();
@@ -216,7 +261,13 @@ function listen_websocket() {
   };
   socket.onmessage = function (event) {
     const chat = JSON.parse(event.data);
+    console.log(chat);
+    console.log(event.data);
+    console.log(chat.room_id, chatroom_id);
     if (chat.sender_id == user.id) {
+      return;
+    }
+    if (chat.room_id != chatroom_id) {
       return;
     }
     appendChatResponse(chat, 1);

@@ -1,4 +1,15 @@
-from fastapi import FastAPI, Response, Depends, Request, Query, WebSocket
+from fastapi import (
+    FastAPI,
+    Response,
+    Depends,
+    Request,
+    Query,
+    WebSocket,
+    Form,
+    UploadFile,
+    File,
+)
+import os
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import FileResponse, RedirectResponse
 
@@ -13,6 +24,8 @@ from pydantic import BaseModel
 from crud.schemas import *
 from websocket.socket_manager import ConnectionManager
 import json
+
+import uuid
 
 
 class NotAuthenticatedException(Exception):
@@ -199,6 +212,12 @@ def get_resources(filename: str):
     return FileResponse(filepath)
 
 
+@app.get("/resources/chatroom/{chatroom_id}/{filename}")
+def get_chatroom_resources(chatroom_id: int, filename: str):
+    filepath = f"resources/chatroom/{chatroom_id}/{filename}"
+    return FileResponse(filepath)
+
+
 """
 CHATROOM API
 """
@@ -256,11 +275,35 @@ def get_all_messages(db: Session = Depends(get_db)):
     return read_all_messages(db)
 
 
+@app.post("/chatroom/{chatroom_id}/message/file")
+async def post_message_img(
+    chatroom_id: int,
+    sender_id: int = Form(...),
+    type: str = Form(...),
+    upload_file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+):
+    """
+    store image in /resources/chatroom/{chatroom_id}/
+    """
+    message = upload_file.file.read()
+    os.makedirs(f"resources/chatroom/{chatroom_id}", exist_ok=True)
+    filename = f"resources/chatroom/{chatroom_id}/{uuid.uuid4()}{upload_file.filename}"
+    with open(filename, "wb") as f:
+        f.write(message)
+
+    request = MessageSchemaBase(
+        message_type=type, message=filename, sender_id=sender_id
+    )
+    message_item = insert_message(request, chatroom_id, db)
+    await socket_manager.broadcast(json.dumps(message_item))
+    return message_item
+
+
 @app.post("/chatroom/{chatroom_id}/message")
 async def post_message(
     message: MessageSchemaBase, chatroom_id: int, db: Session = Depends(get_db)
 ):
     message_item = insert_message(message, chatroom_id, db)
-    print(message_item)
     await socket_manager.broadcast(json.dumps(message_item))
     return message_item

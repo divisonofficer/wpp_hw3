@@ -21,6 +21,30 @@
         </div>
         <div class="chat-content" id="chat-left"></div>
         <div class="chat-input">
+          <input
+            type="file"
+            accept="image/*"
+            id="input-image"
+            class="input-hidden"
+            onchange="sendMediaInput('image');"
+          />
+          <img
+            src="/resources/icon_image_upload.png"
+            class="image-button p4"
+            onclick="$('#input-image').click();"
+          />
+          <input
+            type="file"
+            accept="video/*"
+            id="input-video"
+            class="input-hidden"
+            onchange="sendMediaInput('video');"
+          />
+          <img
+            src="/resources/icon_video_upload.png"
+            class="image-button p4"
+            onclick="$('#input-video').click();"
+          />
           <textarea
             type="text"
             id="input-left"

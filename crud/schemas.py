@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
+from fastapi import Form
 
 
 class GroupChatRequest(BaseModel):

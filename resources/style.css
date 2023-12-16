@@ -151,7 +151,32 @@ body {
 }
 .chat-input {
   display: flex;
+  background-color: white;
   flex-direction: row;
+}
+
+.input-hidden {
+  display: none;
+}
+
+.chat-image {
+  > img {
+    object-fit: cover;
+    box-sizing: border-box;
+    width: 150px;
+    height: 150px;
+    border-radius: 4px;
+  }
+}
+
+.chat-video {
+  > video {
+    object-fit: cover;
+    box-sizing: border-box;
+    width: 150px;
+    height: 150px;
+    border-radius: 4px;
+  }
 }
 
 .chat-input > textarea {
